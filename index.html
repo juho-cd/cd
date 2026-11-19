@@ -376,7 +376,7 @@ body:not(.editing) #dActions{display:none !important}
 .setlbl{font-size:14px;font-weight:500;white-space:nowrap}
 .setmenu .btn.toggle{padding:6px 4px;border:0;background:transparent}
 .setmenu .tseg button{padding:6px 14px}
-.bcbox{margin-bottom:16px;border:1px solid var(--line);border-radius:10px;background:var(--paper);overflow:hidden}
+.bcbox{margin-bottom:10px;border:1px solid var(--line);border-radius:10px;background:var(--paper);overflow:hidden}
 .bctoggle{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;padding:12px 14px;font-weight:600;font-size:14px;text-align:left;color:var(--ink)}
 .bctoggle > svg:first-child{flex:none;color:var(--accent)}
 .bctoggle .chev{margin-left:auto;color:var(--muted);transition:transform .2s}
@@ -464,7 +464,9 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
 .brandedit:hover{color:var(--accent);background:var(--surface)}
 .cprev.round{border-radius:50%}
 .cprev.logodef{background:radial-gradient(circle,var(--paper) 0 16%,var(--ink) 17% 22%,transparent 23%),conic-gradient(from 30deg,#c9ced6,#f5f6f8,#b7c4d6,#e8e0f0,#c9ced6,#f4efe2,#c9ced6)}
-#verifyOv{z-index:31}
+#verifyOv,#nfOv{z-index:31}
+.vbox #nfGo{width:100%;padding:12px;font-size:15px}
+.nficon{color:var(--accent) !important;background:color-mix(in srgb,var(--accent) 12%,transparent) !important}
 .vbox{align-items:center;text-align:center;gap:10px;padding-top:22px}
 .vicon{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--warn-bg);color:var(--warn)}
 .vbox h2{margin:0;font-size:18px;letter-spacing:-.02em}
@@ -617,7 +619,8 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
 
 <div class="overlay" id="tourOv"><div class="scanbox tourbox" role="dialog" aria-modal="true" aria-labelledby="tourTitle"><div class="tourart" id="tourArt" aria-hidden="true"></div><h2 id="tourTitle"></h2><p id="tourText"></p><div class="tourdots" id="tourDots" aria-hidden="true"></div><div class="tourfoot"><button class="btn" type="button" id="tourSkip">건너뛰기</button><div class="tourbtns"><button class="btn" type="button" id="tourPrev">이전</button><button class="btn primary" type="button" id="tourNext">다음</button></div></div></div></div>
 
-<div class="overlay" id="verifyOv"><div class="scanbox vbox" role="alertdialog" aria-modal="true" aria-labelledby="vTitle" aria-describedby="vDesc"><div class="vicon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div><h2 id="vTitle">한 번 더 확인해 주세요</h2><p id="vDesc">바코드로 불러온 정보는 정확하지 않을 수 있어요. 저장하기 전에 CD 실물(뒷면·속지)이나 공식 음원 사이트와 비교해 주세요.</p><ul class="vlist"><li>앨범명과 가수 이름 표기</li><li>발매일</li><li>수록곡 개수와 순서</li><li>타이틀곡은 직접 골라 주세요</li></ul><button class="btn primary" type="button" id="vOk">확인할게요</button></div></div>
+<div class="overlay" id="nfOv"><div class="scanbox vbox" role="alertdialog" aria-modal="true" aria-labelledby="nfTitle" aria-describedby="nfDesc"><div class="vicon nficon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg></div><h2 id="nfTitle">바코드로 찾지 못했어요</h2><p id="nfDesc">아이돌 앨범처럼 바코드가 등록되지 않은 음반이 많아요. 앨범 이름이나 가수 이름으로 찾아 보세요.</p><button class="btn primary" type="button" id="nfGo">이름으로 찾기</button><button class="btn" type="button" id="nfNo" style="width:100%;padding:12px;font-size:15px">직접 적을게요</button></div></div>
+<div class="overlay" id="verifyOv"><div class="scanbox vbox" role="alertdialog" aria-modal="true" aria-labelledby="vTitle" aria-describedby="vDesc"><div class="vicon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div><h2 id="vTitle">한 번 더 확인해 주세요</h2><p id="vDesc">불러온 정보는 정확하지 않을 수 있어요. 저장하기 전에 CD 실물(뒷면·속지)이나 공식 음원 사이트와 비교해 주세요.</p><ul class="vlist"><li>앨범명과 가수 이름 표기</li><li>발매일</li><li>수록곡 개수와 순서</li><li>타이틀곡은 직접 골라 주세요</li></ul><button class="btn primary" type="button" id="vOk">확인할게요</button></div></div>
 
 <div class="overlay" id="scanOv"><div class="scanbox" role="dialog" aria-modal="true" aria-labelledby="scanTitle"><div class="sheethead"><h2 id="scanTitle" style="font-size:17px;margin:0">바코드 스캔</h2><button class="x" type="button" data-close="" aria-label="닫기">×</button></div><div class="scanview"><video id="scanVideo" playsinline="" muted=""></video><div class="bcframe big" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="bcline"></span></div></div><p class="scanmsg" id="scanMsg" aria-live="polite"></p><div class="scanfoot"><label class="btn" for="scanFile">사진으로 찍기</label><input id="scanFile" type="file" accept="image/*" capture="environment" class="sr" aria-label="바코드 사진"></div></div></div>
 
@@ -629,14 +632,21 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     <div class="bcbox" id="bcBox">
       <button type="button" class="bctoggle" id="bcToggle" aria-expanded="false" aria-controls="bcPanel"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"></path><line x1="7" y1="8" x2="7" y2="16"></line><line x1="10" y1="8" x2="10" y2="16"></line><line x1="13" y1="8" x2="13" y2="16"></line><line x1="17" y1="8" x2="17" y2="16"></line></svg>바코드로 불러오기<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
       <div class="bcpanel" id="bcPanel" hidden="">
-        <div class="bcnote">바코드로 불러온 정보는 정확하지 않을 수 있어요. 아이돌 앨범처럼 바코드로 안 나오는 음반은 앨범 이름으로 찾아 보세요. 타이틀곡과 가수의 한국어 이름은 입력되지 않으니, 저장하기 전에 꼭 확인해 주세요.</div>
+        <div class="bcnote">바코드로 불러온 정보는 정확하지 않을 수 있어요. 아이돌 앨범처럼 바코드로 안 나오는 음반은 아래 <b>이름으로 찾기</b>를 써 보세요. 타이틀곡과 가수의 한국어 이름은 입력되지 않으니, 저장하기 전에 꼭 확인해 주세요.</div>
         <div class="bcview" aria-hidden="true"><div class="bcframe"><i></i><i></i><i></i><i></i><span class="bcline"></span></div><p style="margin:0">눌러서 카메라를 켜고 CD 뒷면 바코드를 비춰 주세요<br><small>비추기만 하면 자동으로 읽어 와요</small></p></div>
         <label class="bclbl" for="bcNum">바코드 번호 (보통 13자리)</label>
         <div class="bcrow" style="margin-top:-6px"><input id="bcNum" inputmode="numeric" maxlength="14" autocomplete="off"><button class="btn" type="button" id="bcScan">카메라로 스캔</button><input id="bcPhoto" type="file" accept="image/*" capture="environment" class="sr" aria-label="바코드 사진"><button class="btn primary" type="button" id="bcGo">찾기</button></div>
-        <label class="bclbl" for="bcName" style="margin-top:4px">바코드로 안 나오면 앨범 이름으로 찾기 (아이돌 앨범도 돼요)</label>
-        <div class="bcrow" style="margin-top:-6px"><input id="bcName" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" aria-label="앨범 이름이나 가수 이름"><button class="btn primary" type="button" id="bcNameGo">이름으로 찾기</button></div>
         <ol class="bcsteps" id="bcSteps"><li data-s="mb"><b>MusicBrainz</b><span>대기</span></li><li data-s="dc"><b>Discogs</b><span>대기</span></li><li data-s="kr"><b>국내 음반 쇼핑몰</b><span>대기</span></li></ol>
         <div class="bcresult" id="bcResult"></div>
+      </div>
+    </div>
+    <div class="bcbox nmbox" id="nmBox">
+      <button type="button" class="bctoggle" id="nmToggle" aria-expanded="false" aria-controls="nmPanel"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>이름으로 찾기<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+      <div class="bcpanel" id="nmPanel" hidden="">
+        <div class="bcnote">바코드로 안 나오는 아이돌 앨범도 앨범 이름이나 가수 이름으로 찾을 수 있어요. 찾은 정보는 정확하지 않을 수 있으니 저장하기 전에 꼭 확인해 주세요.</div>
+        <label class="bclbl" for="bcName">앨범 이름이나 가수 이름</label>
+        <div class="bcrow" style="margin-top:-6px"><input id="bcName" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"><button class="btn primary" type="button" id="bcNameGo">찾기</button></div>
+        <div class="bcresult" id="nmResult">찾은 앨범 목록이 여기 나와요. 맞는 앨범을 고르면 아래 칸이 채워져요.</div>
       </div>
     </div>
     <div class="fields">
@@ -692,7 +702,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
 <script id="app-script">
 (function(){
   var $ = function(s){ return document.querySelector(s); };
-  var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var $$ = function(s, ctx){ return Array.prototype.slice.call((ctx || document).querySelectorAll(s)); };
 
   /* pristine pieces, captured before anything renders, used to rebuild the page on save */
   var ROOT_HTML = $('#root').innerHTML;
@@ -1135,14 +1145,21 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     return (10 - sum % 10) % 10 === chk;
   }
   function bcStep(s, txt, cls){ var li = $('#bcSteps li[data-s="' + s + '"]'); li.className = cls || ''; li.querySelector('span').textContent = txt; }
+  function nmMsg(html, cls){ var r = $('#nmResult'); r.className = 'bcresult' + (cls ? ' ' + cls : ''); r.innerHTML = html; }
   function bcMsg(html, cls){ var r = $('#bcResult'); r.className = 'bcresult' + (cls ? ' ' + cls : ''); r.innerHTML = html; }
   function bcReset(){
     bcTimers.forEach(clearTimeout); bcTimers = [];
     $('#bcPanel').hidden = true; $('#bcToggle').setAttribute('aria-expanded', 'false');
     $('#bcNum').value = ''; $('#bcName').value = '';
+    $('#nmPanel').hidden = true; $('#nmToggle').setAttribute('aria-expanded', 'false'); nmMsg(BC_IDLE);
     ['mb', 'dc', 'kr'].forEach(function(s){ bcStep(s, '대기'); });
     bcMsg(BC_IDLE);
   }
+  $('#nmToggle').addEventListener('click', function(){
+    var p = $('#nmPanel'); p.hidden = !p.hidden;
+    this.setAttribute('aria-expanded', p.hidden ? 'false' : 'true');
+    if (!p.hidden) setTimeout(function(){ $('#bcName').focus(); }, 50);
+  });
   $('#bcToggle').addEventListener('click', function(){
     var p = $('#bcPanel'); p.hidden = !p.hidden;
     this.setAttribute('aria-expanded', p.hidden ? 'false' : 'true');
@@ -1163,7 +1180,8 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       var dupNote = have.length ? '<p class="bcdup"><b>이 바코드로 이미 등록된 CD가 있어요:</b> ' + have.map(function(c){ return esc(c.title) + ' · ' + esc(c.artist); }).join(', ') + '</p>' : '';
       bcCands = list;
       if (!list.length) {
-        bcMsg('<b>추정되는 앨범을 찾지 못했어요.</b> 아이돌 앨범은 바코드가 등록돼 있지 않은 경우가 많아요. 위의 <b>앨범 이름으로 찾기</b>에 앨범 이름이나 가수 이름을 적어 보세요. 바코드 번호(<span class="num">' + v + '</span>)는 아래 칸에 넣어 뒀어요.' + dupNote);
+        setTimeout(function(){ if (token === bcToken) { openOv('#nfOv'); setTimeout(function(){ $('#nfGo').focus(); }, 60); } }, 250);
+        bcMsg('<b>추정되는 앨범을 찾지 못했어요.</b> 아이돌 앨범은 바코드가 등록돼 있지 않은 경우가 많아요. 아래 <b>이름으로 찾기</b>에서 앨범 이름이나 가수 이름으로 찾아 보세요. 바코드 번호(<span class="num">' + v + '</span>)는 아래 칸에 넣어 뒀어요.' + dupNote);
         return;
       }
       bcMsg('<b>추정되는 앨범 ' + list.length + '개를 찾았어요.</b> 가지고 있는 CD와 같은 것을 골라 주세요.' + dupNote +
@@ -1323,10 +1341,11 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       { title: 'Voicenotes', artist: 'Charlie Puth', year: 2018, month: 5, tracks: ['The Way I Am', 'Attention', 'LA Girls', 'How Long', 'Done for Me (feat. Kehlani)', 'Patient', 'If You Leave Me Now (feat. Boyz II Men)', 'BOY', 'Slow It Down', 'Change (feat. James Taylor)', 'Somebody Told Me', 'Empty Cups', 'Through It All'], note: 'WKPD 0396 · 한국 라이선스반' }
     ]
   };
-  $('#bcResult').addEventListener('click', function(e){
+  function candClick(e){
+    var box = e.currentTarget;
     var b = e.target.closest('.bccand'); if (!b) return;
     var c = bcCands[+b.dataset.ci]; if (!c) return;
-    $$('#bcResult .bccand').forEach(function(x){ x.classList.toggle('on', x === b); });
+    $$('.bccand', box).forEach(function(x){ x.classList.toggle('on', x === b); });
     setFormType(false);
     $('#f-title').value = c.title;
     $('#f-artist').value = c.artist; $('#f-artistko').value = '';
@@ -1335,7 +1354,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     var done = function(){
       fillRows((c.tracks || []).map(function(t){ return { t: t }; }), []);
       checkDup(); saveDraft();
-      var old = $('#bcResult .bcdone'); if (old) old.parentNode.removeChild(old);
+      var old = box.querySelector('.bcdone'); if (old) old.parentNode.removeChild(old);
       b.parentNode.insertAdjacentHTML('afterend', '<p class="bcdone">아래 칸에 채웠어요. 틀린 곳이 없는지 확인한 뒤 저장해 주세요.</p>');
       openOv('#verifyOv'); setTimeout(function(){ $('#vOk').focus(); }, 60);
       bcLoadCover(c);
@@ -1347,7 +1366,9 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       b.classList.add('loading'); b.disabled = true;
       bcLoadDetail(c).catch(function(){ c.tracks = []; }).then(function(){ b.classList.remove('loading'); b.disabled = false; done(); });
     } else done();
-  });
+  }
+  $('#bcResult').addEventListener('click', candClick);
+  $('#nmResult').addEventListener('click', candClick);
   /* ---- search by album / artist name (idol albums etc.) ---- */
   function nmApple(q){
     return jsonp('https://itunes.apple.com/search?media=music&entity=album&limit=15&country=KR&term=' + encodeURIComponent(q))
@@ -1400,7 +1421,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     var q = $('#bcName').value.trim();
     if (!q) { q = [$('#f-title').value.trim(), $('#f-artist').value.trim()].filter(Boolean).join(' '); $('#bcName').value = q; }
     if (!q) { bcMsg('앨범 이름이나 가수 이름을 적어 주세요.', 'err'); $('#bcName').focus(); return; }
-    bcCands = [];
+    bcCands = []; var bcMsg = nmMsg;
     var token = ++bcToken, fails = 0;
     var safe = function(p){ return p.catch(function(){ fails++; return []; }); };
     bcMsg('<span class="bcload" aria-hidden="true"></span>“' + esc(q) + '” 앨범을 찾는 중…');
@@ -1427,6 +1448,12 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
   }
   $('#bcNameGo').addEventListener('click', bcNameRun);
   $('#bcName').addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); bcNameRun(); } });
+  $('#nfGo').addEventListener('click', function(){
+    closeOv('#nfOv');
+    var p = $('#nmPanel'); p.hidden = false; $('#nmToggle').setAttribute('aria-expanded', 'true');
+    setTimeout(function(){ $('#nmBox').scrollIntoView({ behavior: 'smooth', block: 'start' }); $('#bcName').focus(); }, 120);
+  });
+  $('#nfNo').addEventListener('click', function(){ closeOv('#nfOv'); $('#f-title').focus(); });
   $('#vOk').addEventListener('click', function(){ closeOv('#verifyOv'); $('#f-title').focus(); });
   $('#bcGo').addEventListener('click', bcRun);
   $('#bcNum').addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); bcRun(); } });
@@ -1760,6 +1787,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     if (e.key === 'Escape') {
       if ($('#tourOv').classList.contains('open')) closeOv('#tourOv');
       else if ($('#verifyOv').classList.contains('open')) closeOv('#verifyOv');
+      else if ($('#nfOv').classList.contains('open')) closeOv('#nfOv');
       else if ($('#brandOv').classList.contains('open')) closeOv('#brandOv');
       else if ($('#scanOv').classList.contains('open')) closeOv('#scanOv');
       else if ($('#formOv').classList.contains('open')) closeOv('#formOv');
