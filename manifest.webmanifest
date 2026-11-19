@@ -1,0 +1,38 @@
+{
+  "id": "./",
+  "name": "내 CD 컬렉션",
+  "short_name": "CD 컬렉션",
+  "description": "가지고 있는 CD를 등록하고 가수별로 정리하는 나만의 CD 컬렉션",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eceef1",
+  "theme_color": "#eceef1",
+  "categories": [
+    "music",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
