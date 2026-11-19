@@ -216,6 +216,18 @@ body.notags .tag,body.notags #exnotice{display:none}
 .dartist .ko{font-size:14px;margin-left:6px;opacity:.85}
 @media (max-width:640px){.artist2{grid-template-columns:1fr}}
 .coverpick + .coverpick{margin-top:8px}
+.csug{margin-bottom:10px;padding:10px 10px 8px;border-radius:10px;background:var(--paper);border:1px solid var(--line);animation:fadeUp .3s ease both}
+.csughead{display:block;font-size:12.5px;color:var(--muted);margin:0 2px 8px}
+.csughead b{color:var(--ink);font-weight:600}
+.csuglist{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:thin;scroll-snap-type:x proximity}
+.csugitem{flex:none;width:92px;display:flex;flex-direction:column;gap:4px;border:0;background:none;padding:0;text-align:left;scroll-snap-align:start;cursor:pointer}
+.csugitem img{width:92px;height:92px;border-radius:6px;object-fit:cover;border:2px solid transparent;background:var(--surface);box-shadow:0 4px 10px -6px rgba(0,0,0,.4);transition:border-color .2s,transform .2s}
+.csugitem:hover img{transform:translateY(-2px)}
+.csugitem.on img{border-color:var(--accent)}
+.csugitem.loading{opacity:.55;pointer-events:none}
+.csugitem .st{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.csugitem .sa{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.csugload{font-size:12.5px;color:var(--muted);padding:4px 2px 6px}
 .cside{width:100%;font-size:12px;font-weight:700;color:var(--muted)}
 .case.flip{perspective:900px}
 .flipper{position:relative;z-index:1;width:86%;aspect-ratio:1;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.35,.1,.2,1)}
@@ -658,6 +670,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       <div class="field full"><span class="flabel" id="dateLbl">발매일<span class="opt">선택</span></span><div class="datein" role="group" aria-labelledby="dateLbl"><input id="f-year" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="발매 연도"><span>년</span><input id="f-month" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="발매 월"><span>월</span><input id="f-day" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="발매 일"><span>일</span></div><span class="hint">월·일은 모르면 비워 두세요.</span></div>
       <div class="field full"><label for="f-barcode">바코드<span class="opt">선택</span></label><input id="f-barcode" inputmode="numeric" maxlength="14" autocomplete="off"><span class="hint">CD 뒷면 바코드 아래 숫자예요. 적어 두면 같은 CD를 또 등록하려 할 때 알려 드려요.</span></div>
       <div class="field full"><span class="flabel" id="coverLbl">앨범 커버<span class="opt">선택</span></span>
+        <div class="csug" id="coverSug" hidden=""><span class="csughead" id="coverSugHead"></span><div class="csuglist" id="coverSugList" role="list"></div></div>
         <div class="coverpick" id="coverDrop">
           <div class="cprev" id="coverPrev" aria-hidden="true"></div>
           <div class="cbtns">
@@ -1328,6 +1341,70 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     img.onerror = function(){ if (srcs.length > 1) { srcs.shift(); img.src = srcs[0]; } };
     img.src = srcs[0];
   }
+  /* ---- real cover suggestions from typed title ---- */
+  function loadCoverUrl(srcs, done){
+    srcs = srcs.filter(Boolean);
+    if (!srcs.length) { done(false); return; }
+    var img = new Image(); img.crossOrigin = 'anonymous';
+    img.onload = function(){
+      try {
+        var S = 400, side = Math.min(img.naturalWidth, img.naturalHeight);
+        var cv = document.createElement('canvas'); cv.width = S; cv.height = S;
+        var ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, S, S);
+        ctx.drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, S, S);
+        setFormCover(cv.toDataURL('image/jpeg', 0.8)); done(true);
+      } catch(e) { srcs.shift(); loadCoverUrl(srcs, done); }
+    };
+    img.onerror = function(){ srcs.shift(); loadCoverUrl(srcs, done); };
+    img.src = srcs[0];
+  }
+  var csTimer = null, csToken = 0, csLastQ = '', csList = [];
+  function coverSugHide(){ csToken++; csLastQ = ''; $('#coverSug').hidden = true; $('#coverSugList').innerHTML = ''; }
+  function coverSugSchedule(){ clearTimeout(csTimer); csTimer = setTimeout(coverSugRun, 900); }
+  function coverSugRun(){
+    var t = $('#f-title').value.trim();
+    var a = $('#f-artist').value.trim() || $('#f-artistko').value.trim();
+    if (t.length < 2) { coverSugHide(); return; }
+    var q = (t + ' ' + a).trim();
+    if (q === csLastQ) return;
+    csLastQ = q;
+    var token = ++csToken;
+    $('#coverSug').hidden = false;
+    $('#coverSugHead').innerHTML = '“' + esc(t) + '” 커버를 찾는 중…';
+    $('#coverSugList').innerHTML = '';
+    var safe = function(p){ return p.catch(function(){ return []; }); };
+    Promise.all([safe(nmApple(q)), safe(nmDeezer(q))]).then(function(parts){
+      if (token !== csToken) return;
+      var nt = norm(t), na = norm(a), out = [], seen = {};
+      parts.forEach(function(list){ list.forEach(function(c){
+        if (!c.thumb || !c.coverBig) return;
+        var k = candKey(c); if (k in seen) { out[seen[k]].alt = c.coverBig; return; }
+        var ct = norm(c.title), ca = norm(c.artist);
+        c.rank = (ct === nt ? 4 : (ct.indexOf(nt) > -1 || nt.indexOf(ct) > -1 ? 2 : 0)) + (na && (ca.indexOf(na) > -1 || na.indexOf(ca) > -1) ? 3 : 0);
+        seen[k] = out.length; out.push(c);
+      }); });
+      out = out.filter(function(c){ return c.rank > 0; }).sort(function(x, y){ return y.rank - x.rank; }).slice(0, 8);
+      csList = out;
+      if (!out.length) { coverSugHide(); return; }
+      $('#coverSugHead').innerHTML = '<b>이 앨범 커버가 맞나요?</b> 누르면 앞면 사진으로 넣어요.';
+      $('#coverSugList').innerHTML = out.map(function(c, i){
+        return '<button type="button" class="csugitem" role="listitem" data-si="' + i + '"><img src="' + esc(c.thumb) + '" alt="' + esc(c.title) + ' 커버" loading="lazy" onerror="this.closest(\'.csugitem\').remove()"><span class="st">' + esc(c.title) + '</span><span class="sa">' + esc(c.artist) + '</span></button>';
+      }).join('');
+    });
+  }
+  ['#f-title', '#f-artist', '#f-artistko'].forEach(function(id){
+    $(id).addEventListener('input', coverSugSchedule);
+    $(id).addEventListener('change', coverSugSchedule);
+  });
+  $('#coverSugList').addEventListener('click', function(e){
+    var b = e.target.closest('.csugitem'); if (!b) return;
+    var c = csList[+b.dataset.si]; if (!c) return;
+    b.classList.add('loading');
+    loadCoverUrl([c.coverBig, c.alt, c.thumb], function(ok){
+      b.classList.remove('loading');
+      if (ok) $$('.csugitem', $('#coverSugList')).forEach(function(x){ x.classList.toggle('on', x === b); });
+    });
+  });
   var bcCands = [];
   var BC_SAMPLE = {
     '8809269505194': [
@@ -1514,7 +1591,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     $('#f-month').value = cd && cd.month ? cd.month : '';
     $('#f-day').value = cd && cd.day ? cd.day : '';
     $('#f-barcode').value = cd && cd.barcode ? cd.barcode : '';
-    bcReset();
+    bcReset(); coverSugHide();
     fillRows(cd ? (cd.tracks || []) : [], cd ? titleIdx(cd) : []);
     setFormCover(cd ? validCover(cd.cover) : null);
     setFormCover2(cd ? validCover(cd.cover2) : null);
