@@ -396,6 +396,7 @@ body:not(.editing) #dActions{display:none !important}
 @keyframes bcscan{from{transform:translateY(-22px)}to{transform:translateY(22px)}}
 .bclbl{font-size:12px;font-weight:500;color:var(--muted)}
 .bcrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#bcName{flex:1;min-width:150px}
 #bcNum{flex:1;min-width:150px;border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:9px 11px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
 #bcNum:focus{outline:none;border-color:var(--accent)}
 .bcsteps{display:none !important}
@@ -427,7 +428,7 @@ body:not(.editing) #dActions{display:none !important}
 .bcresult b{color:var(--ink);font-weight:600}
 .bcresult.err{color:var(--warn);border-color:var(--warn)}
 .bcresult .num{font-weight:700;color:var(--ink);letter-spacing:.04em}
-@media (max-width:640px){#bcNum{font-size:16px}}
+@media (max-width:640px){#bcNum,#bcName{font-size:16px}}
 .meta .mtt{color:var(--ink);opacity:.85;overflow-wrap:anywhere}
 .mtt b{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.07em;color:var(--accent);border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-right:6px;vertical-align:1px;line-height:1.5}
 .dinfo{gap:6px 16px;align-items:center}
@@ -485,6 +486,9 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
 .tourbtns{display:flex;gap:8px}
 #tourSkip{border-color:transparent;background:transparent;color:var(--muted)}
 .setbtns{display:flex;gap:6px}
+.setsub{display:block;white-space:normal;font-size:11.5px;font-weight:400;color:var(--muted);margin-top:3px;max-width:190px;line-height:1.4;word-break:keep-all}
+#abBtn{white-space:nowrap;flex:none}
+.setrow .setlbl{min-width:0}
 .setmenu .setrow .btn:not(.toggle){padding:6px 12px;font-size:13px}
 .field select{border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:9px 11px;width:100%}
 .field input,.field textarea{border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:9px 11px;width:100%}
@@ -600,7 +604,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       
       
       <button class="btn" id="randBtn" type="button">랜덤 추천</button>
-      <div class="setwrap"><button class="btn gear" id="gearBtn" type="button" aria-label="설정" aria-expanded="false" aria-controls="setMenu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button><div class="setmenu" id="setMenu" role="dialog" aria-label="설정" hidden=""><div class="setrow"><span class="setlbl">디자인 모드</span><div class="tseg" id="viewSeg" role="group" aria-label="디자인 모드"><button type="button" data-view="grid" aria-pressed="true">기본</button><button type="button" data-view="shelf" aria-pressed="false">진열장</button></div></div><div class="setrow"><span class="setlbl">사용법</span><button class="btn" type="button" id="tourBtn">사용법 보기</button></div><div class="setrow"><span class="setlbl">백업</span><div class="setbtns"><button class="btn" type="button" id="expBtn">내보내기</button><label class="btn" for="impFile">불러오기</label><input id="impFile" type="file" accept="application/json,.json" class="sr" aria-label="백업 파일"></div></div><div class="setrow"><span class="setlbl" id="editLbl">편집 모드</span><button class="btn toggle" id="editToggle" type="button" aria-pressed="false" aria-labelledby="editLbl"><span class="sw" aria-hidden="true"></span></button></div></div></div>
+      <div class="setwrap"><button class="btn gear" id="gearBtn" type="button" aria-label="설정" aria-expanded="false" aria-controls="setMenu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button><div class="setmenu" id="setMenu" role="dialog" aria-label="설정" hidden=""><div class="setrow"><span class="setlbl">디자인 모드</span><div class="tseg" id="viewSeg" role="group" aria-label="디자인 모드"><button type="button" data-view="grid" aria-pressed="true">기본</button><button type="button" data-view="shelf" aria-pressed="false">진열장</button></div></div><div class="setrow"><span class="setlbl">사용법</span><button class="btn" type="button" id="tourBtn">사용법 보기</button></div><div class="setrow"><span class="setlbl">자동 백업<small class="setsub" id="abInfo">이 기기 안에 자동으로 저장돼요</small></span><button class="btn" type="button" id="abBtn" hidden>파일 정하기</button></div><div class="setrow"><span class="setlbl">백업</span><div class="setbtns"><button class="btn" type="button" id="expBtn">내보내기</button><label class="btn" for="impFile">불러오기</label><input id="impFile" type="file" accept="application/json,.json" class="sr" aria-label="백업 파일"></div></div><div class="setrow"><span class="setlbl" id="editLbl">편집 모드</span><button class="btn toggle" id="editToggle" type="button" aria-pressed="false" aria-labelledby="editLbl"><span class="sw" aria-hidden="true"></span></button></div></div></div>
       <button class="btn primary" id="addBtn" type="button">+ CD 추가</button>
     </div>
   </div>
@@ -625,10 +629,12 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     <div class="bcbox" id="bcBox">
       <button type="button" class="bctoggle" id="bcToggle" aria-expanded="false" aria-controls="bcPanel"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"></path><line x1="7" y1="8" x2="7" y2="16"></line><line x1="10" y1="8" x2="10" y2="16"></line><line x1="13" y1="8" x2="13" y2="16"></line><line x1="17" y1="8" x2="17" y2="16"></line></svg>바코드로 불러오기<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
       <div class="bcpanel" id="bcPanel" hidden="">
-        <div class="bcnote">바코드로 불러온 정보는 정확하지 않을 수 있어요. 특히 K-pop 음반은 정보가 없거나 발매일·수록곡이 다를 수 있어요. 타이틀곡과 가수의 한국어 이름은 입력되지 않으니, 저장하기 전에 꼭 확인해 주세요.</div>
+        <div class="bcnote">바코드로 불러온 정보는 정확하지 않을 수 있어요. 아이돌 앨범처럼 바코드로 안 나오는 음반은 앨범 이름으로 찾아 보세요. 타이틀곡과 가수의 한국어 이름은 입력되지 않으니, 저장하기 전에 꼭 확인해 주세요.</div>
         <div class="bcview" aria-hidden="true"><div class="bcframe"><i></i><i></i><i></i><i></i><span class="bcline"></span></div><p style="margin:0">눌러서 카메라를 켜고 CD 뒷면 바코드를 비춰 주세요<br><small>비추기만 하면 자동으로 읽어 와요</small></p></div>
         <label class="bclbl" for="bcNum">바코드 번호 (보통 13자리)</label>
         <div class="bcrow" style="margin-top:-6px"><input id="bcNum" inputmode="numeric" maxlength="14" autocomplete="off"><button class="btn" type="button" id="bcScan">카메라로 스캔</button><input id="bcPhoto" type="file" accept="image/*" capture="environment" class="sr" aria-label="바코드 사진"><button class="btn primary" type="button" id="bcGo">찾기</button></div>
+        <label class="bclbl" for="bcName" style="margin-top:4px">바코드로 안 나오면 앨범 이름으로 찾기 (아이돌 앨범도 돼요)</label>
+        <div class="bcrow" style="margin-top:-6px"><input id="bcName" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" aria-label="앨범 이름이나 가수 이름"><button class="btn primary" type="button" id="bcNameGo">이름으로 찾기</button></div>
         <ol class="bcsteps" id="bcSteps"><li data-s="mb"><b>MusicBrainz</b><span>대기</span></li><li data-s="dc"><b>Discogs</b><span>대기</span></li><li data-s="kr"><b>국내 음반 쇼핑몰</b><span>대기</span></li></ol>
         <div class="bcresult" id="bcResult"></div>
       </div>
@@ -636,7 +642,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
     <div class="fields">
       <div class="field full"><label for="f-title">앨범명</label><input id="f-title" required="" autocomplete="off" autocorrect="off" spellcheck="false"></div>
       <div class="field full"><span class="flabel" id="typeLbl">분류</span><div class="tseg" id="typeSeg" role="group" aria-labelledby="typeLbl"><button type="button" data-type="album" aria-pressed="true">일반</button><button type="button" data-type="ost" aria-pressed="false">OST</button></div></div>
-      <div class="field full"><span class="flabel" id="artistLbl">가수</span><div class="artist2"><div class="sub"><label for="f-artist" class="sublbl">영어(원어)</label><div class="combo"><input id="f-artist" required="" autocomplete="off" autocorrect="off" spellcheck="false"><button type="button" class="combobtn" id="artistBtn" aria-label="저장된 가수에서 고르기" aria-expanded="false" aria-controls="artistMenu"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="combomenu" id="artistMenu" role="listbox" aria-label="저장된 가수" hidden=""></div></div></div><div class="sub"><label for="f-artistko" class="sublbl">한국어</label><div class="combo" id="koCombo"><input id="f-artistko" autocomplete="off" autocorrect="off" spellcheck="false"><button type="button" class="combobtn" id="artistBtnKo" aria-label="저장된 가수에서 고르기" aria-expanded="false" aria-controls="artistMenu"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div></div></div><span class="hint">둘 중 하나만 적어도 돼요. ▾를 누르면 이미 등록된 이름 중에서 고를 수 있어요.</span></div>
+      <div class="field full"><span class="flabel" id="artistLbl">가수</span><div class="artist2"><div class="sub"><label for="f-artist" class="sublbl">원어</label><div class="combo"><input id="f-artist" required="" autocomplete="off" autocorrect="off" spellcheck="false"><button type="button" class="combobtn" id="artistBtn" aria-label="저장된 가수에서 고르기" aria-expanded="false" aria-controls="artistMenu"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="combomenu" id="artistMenu" role="listbox" aria-label="저장된 가수" hidden=""></div></div></div><div class="sub"><label for="f-artistko" class="sublbl">한국어</label><div class="combo" id="koCombo"><input id="f-artistko" autocomplete="off" autocorrect="off" spellcheck="false"><button type="button" class="combobtn" id="artistBtnKo" aria-label="저장된 가수에서 고르기" aria-expanded="false" aria-controls="artistMenu"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div></div></div><span class="hint">둘 중 하나만 적어도 돼요. ▾를 누르면 이미 등록된 이름 중에서 고를 수 있어요.</span></div>
       <div class="dup" id="dup"></div>
       <div class="optsep"><span>여기부터는 모두 선택 사항이에요. 모르면 비워 두고 저장해도 돼요.</span></div>
       <div class="field full"><span class="flabel" id="dateLbl">발매일<span class="opt">선택</span></span><div class="datein" role="group" aria-labelledby="dateLbl"><input id="f-year" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="발매 연도"><span>년</span><input id="f-month" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="발매 월"><span>월</span><input id="f-day" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="발매 일"><span>일</span></div><span class="hint">월·일은 모르면 비워 두세요.</span></div>
@@ -752,7 +758,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
   var readOnly = false, saveTimer = null;
   function setSave(state){
     var el = $('#savestate'); el.classList.remove('err'); el.disabled = true;
-    var t = { saved: '이 기기에 저장됨', saving: '저장 중…', loading: '불러오는 중…', error: '저장 실패 · 눌러서 다시 시도' }[state] || '';
+    var t = { saved: '이 기기에 저장됨', saving: '자동 저장 중…', loading: '불러오는 중…', error: '저장 실패 · 눌러서 다시 시도' }[state] || '';
     if (state === 'error') { el.classList.add('err'); el.disabled = false; }
     el.textContent = t;
   }
@@ -771,10 +777,75 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
   function idbGet(k){ return idb().then(function(db){ return new Promise(function(res, rej){ var q = db.transaction(DB_STORE).objectStore(DB_STORE).get(k); q.onsuccess = function(){ res(q.result); }; q.onerror = function(){ rej(q.error); }; }); }); }
   function idbSet(k, v){ return idb().then(function(db){ return new Promise(function(res, rej){ var tx = db.transaction(DB_STORE, 'readwrite'); tx.objectStore(DB_STORE).put(v, k); tx.oncomplete = function(){ res(); }; tx.onerror = function(){ rej(tx.error); }; }); }); }
   function snapshot(){ return { version: 2, savedAt: savedAt, settings: settings, cds: cds }; }
+  /* auto backup: always overwrite ONE backup file */
+  var abHandle = null, abNeedPerm = false, abBusy = false, abAgain = false;
+  var abFS = typeof window.showSaveFilePicker === 'function';
+  function backupJSON(){ return JSON.stringify({ version: 2, exportedAt: new Date().toISOString(), settings: settings, cds: cds }); }
+  function opfsWrite(txt){
+    if (!navigator.storage || !navigator.storage.getDirectory) return Promise.resolve();
+    return navigator.storage.getDirectory().then(function(d){ return d.getFileHandle('CD컬렉션_자동백업.json', { create: true }); })
+      .then(function(h){ return h.createWritable(); })
+      .then(function(w){ return w.write(txt).then(function(){ return w.close(); }); })
+      .catch(function(){});
+  }
+  function opfsRead(){
+    if (!navigator.storage || !navigator.storage.getDirectory) return Promise.resolve(null);
+    return navigator.storage.getDirectory().then(function(d){ return d.getFileHandle('CD컬렉션_자동백업.json'); })
+      .then(function(h){ return h.getFile(); }).then(function(f){ return f.text(); })
+      .then(function(t){ var o = JSON.parse(t); return o && Array.isArray(o.cds) ? o : null; })
+      .catch(function(){ return null; });
+  }
+  function fileWrite(txt){
+    if (!abHandle || abNeedPerm) return Promise.resolve();
+    return abHandle.createWritable().then(function(w){ return w.write(txt).then(function(){ return w.close(); }); })
+      .catch(function(){ abNeedPerm = true; abUI(); });
+  }
+  function autoBackup(){
+    if (abBusy) { abAgain = true; return Promise.resolve(); }
+    abBusy = true; setSave('saving');
+    var txt = backupJSON();
+    return Promise.all([opfsWrite(txt), fileWrite(txt)]).then(function(){
+      abBusy = false;
+      if (abAgain) { abAgain = false; return autoBackup(); }
+      setSave('saved');
+    });
+  }
+  function abUI(){
+    var b = $('#abBtn'), i = $('#abInfo');
+    if (!abFS) { b.hidden = true; i.textContent = '이 기기 안에 자동으로 저장돼요'; return; }
+    b.hidden = false;
+    if (!abHandle) { b.textContent = '파일 정하기'; i.textContent = '파일을 정하면 바뀔 때마다 그 파일에 덮어써요'; }
+    else if (abNeedPerm) { b.textContent = '다시 연결'; i.textContent = '“' + abHandle.name + '” 연결이 끊겼어요'; }
+    else { b.textContent = '바꾸기'; i.textContent = '“' + abHandle.name + '”에 자동으로 덮어써요'; }
+  }
+  $('#abBtn').addEventListener('click', function(){
+    if (abHandle && abNeedPerm) {
+      abHandle.requestPermission({ mode: 'readwrite' }).then(function(p){ if (p === 'granted') { abNeedPerm = false; abUI(); autoBackup(); } });
+      return;
+    }
+    window.showSaveFilePicker({ suggestedName: 'CD컬렉션_자동백업.json', types: [{ description: '백업 파일', accept: { 'application/json': ['.json'] } }] })
+      .then(function(h){ abHandle = h; abNeedPerm = false; idbSet('abHandle', h).catch(function(){}); abUI(); autoBackup(); })
+      .catch(function(){});
+  });
+  function abRestoreHandle(){
+    if (!abFS) { abUI(); return; }
+    idbGet('abHandle').then(function(h){
+      if (!h || !h.queryPermission) { abUI(); return; }
+      abHandle = h;
+      return h.queryPermission({ mode: 'readwrite' }).then(function(p){
+        abNeedPerm = p !== 'granted'; abUI();
+        if (abNeedPerm) {
+          var once = function(){ document.removeEventListener('pointerdown', once, true);
+            h.requestPermission({ mode: 'readwrite' }).then(function(r){ if (r === 'granted') { abNeedPerm = false; abUI(); } }).catch(function(){}); };
+          document.addEventListener('pointerdown', once, true);
+        }
+      });
+    }).catch(function(){ abUI(); });
+  }
   function doSave(){
     setSave('saving');
-    idbSet('state', snapshot()).then(function(){ setSave('saved'); }, function(){
-      try { localStorage.setItem(LS, JSON.stringify(snapshot())); setSave('saved'); } catch(e) { setSave('error'); }
+    idbSet('state', snapshot()).then(function(){ return autoBackup(); }, function(){
+      try { localStorage.setItem(LS, JSON.stringify(snapshot())); return autoBackup(); } catch(e) { setSave('error'); }
     });
   }
   function commit(){
@@ -1068,7 +1139,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
   function bcReset(){
     bcTimers.forEach(clearTimeout); bcTimers = [];
     $('#bcPanel').hidden = true; $('#bcToggle').setAttribute('aria-expanded', 'false');
-    $('#bcNum').value = '';
+    $('#bcNum').value = ''; $('#bcName').value = '';
     ['mb', 'dc', 'kr'].forEach(function(s){ bcStep(s, '대기'); });
     bcMsg(BC_IDLE);
   }
@@ -1092,7 +1163,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       var dupNote = have.length ? '<p class="bcdup"><b>이 바코드로 이미 등록된 CD가 있어요:</b> ' + have.map(function(c){ return esc(c.title) + ' · ' + esc(c.artist); }).join(', ') + '</p>' : '';
       bcCands = list;
       if (!list.length) {
-        bcMsg('<b>추정되는 앨범을 찾지 못했어요.</b> 음반 정보에 아직 등록되지 않은 CD일 수 있어요. 바코드 번호(<span class="num">' + v + '</span>)는 아래 칸에 넣어 뒀으니, 나머지는 직접 적어 주세요.' + dupNote);
+        bcMsg('<b>추정되는 앨범을 찾지 못했어요.</b> 아이돌 앨범은 바코드가 등록돼 있지 않은 경우가 많아요. 위의 <b>앨범 이름으로 찾기</b>에 앨범 이름이나 가수 이름을 적어 보세요. 바코드 번호(<span class="num">' + v + '</span>)는 아래 칸에 넣어 뒀어요.' + dupNote);
         return;
       }
       bcMsg('<b>추정되는 앨범 ' + list.length + '개를 찾았어요.</b> 가지고 있는 CD와 같은 것을 골라 주세요.' + dupNote +
@@ -1132,7 +1203,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
   }
   /* source 1: open music database */
   function srcMB(v){
-    return fetch(MB + 'release/?fmt=json&limit=10&query=' + encodeURIComponent('barcode:' + v))
+    return fetch(MB + 'release/?fmt=json&limit=10&query=' + encodeURIComponent(codeVariants(v).map(function(x){ return 'barcode:' + x; }).join(' OR ')))
       .then(function(r){ if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
       .then(function(j){
         return (j.releases || []).map(function(r){
@@ -1269,11 +1340,93 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       openOv('#verifyOv'); setTimeout(function(){ $('#vOk').focus(); }, 60);
       bcLoadCover(c);
     };
-    if (!c.tracks && c.mbid) {
+    if (!c.tracks && (c.itId || c.dzId)) {
+      b.classList.add('loading'); b.disabled = true;
+      nameDetail(c).catch(function(){ c.tracks = []; }).then(function(){ b.classList.remove('loading'); b.disabled = false; done(); });
+    } else if (!c.tracks && c.mbid) {
       b.classList.add('loading'); b.disabled = true;
       bcLoadDetail(c).catch(function(){ c.tracks = []; }).then(function(){ b.classList.remove('loading'); b.disabled = false; done(); });
     } else done();
   });
+  /* ---- search by album / artist name (idol albums etc.) ---- */
+  function nmApple(q){
+    return jsonp('https://itunes.apple.com/search?media=music&entity=album&limit=15&country=KR&term=' + encodeURIComponent(q))
+      .then(function(j){
+        return ((j && j.results) || []).map(function(al){
+          var d = splitDate(al.releaseDate), art = String(al.artworkUrl100 || '');
+          return { itId: al.collectionId, title: al.collectionName || '', artist: al.artistName || '', year: d.year, month: d.month, day: d.day,
+            trackCount: al.trackCount || 0, tracks: null, thumb: art,
+            coverBig: art ? art.replace(/\/\d+x\d+(bb)?\.(jpg|png)$/, '/600x600bb.jpg') : '', note: '' };
+        });
+      });
+  }
+  function nmDeezer(q){
+    return jsonp('https://api.deezer.com/search/album?limit=15&output=jsonp&q=' + encodeURIComponent(q))
+      .then(function(j){
+        return ((j && j.data) || []).map(function(a){
+          return { dzId: a.id, title: a.title || '', artist: (a.artist && a.artist.name) || '', year: null, month: null, day: null,
+            trackCount: a.nb_tracks || 0, tracks: null, thumb: a.cover_medium || '', coverBig: a.cover_xl || a.cover_big || '',
+            note: a.record_type === 'single' ? '싱글' : '' };
+        });
+      });
+  }
+  function nmMB(q){
+    var t = q.replace(/["\\]/g, ' ');
+    return fetch(MB + 'release/?fmt=json&limit=10&query=' + encodeURIComponent('release:"' + t + '" OR artist:"' + t + '"'))
+      .then(function(r){ if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+      .then(function(j){
+        return (j.releases || []).filter(function(r){ return (r.score || 0) >= 70; }).map(function(r){
+          var d = splitDate(r.date), li = (r['label-info'] || [])[0] || {};
+          var fmt = (r.media || []).map(function(m){ return m.format; }).filter(Boolean)[0] || '';
+          return { mbid: r.id, title: r.title || '', artist: mbArtist(r['artist-credit']), year: d.year, month: d.month, day: d.day,
+            trackCount: r['track-count'] || 0, tracks: null,
+            thumb: 'https://coverartarchive.org/release/' + r.id + '/front-250', coverBig: 'https://coverartarchive.org/release/' + r.id + '/front-500',
+            note: [li.label && li.label.name, r.country, fmt].filter(Boolean).join(' · ') };
+        });
+      });
+  }
+  function nameDetail(c){
+    if (c.itId) return jsonp('https://itunes.apple.com/lookup?entity=song&limit=200&country=KR&id=' + c.itId).then(function(j){
+      c.tracks = ((j && j.results) || []).filter(function(x){ return x.wrapperType === 'track'; })
+        .sort(function(a, b){ return (a.discNumber || 1) - (b.discNumber || 1) || (a.trackNumber || 0) - (b.trackNumber || 0); })
+        .map(function(x){ return x.trackName; });
+    });
+    return jsonp('https://api.deezer.com/album/' + c.dzId + '?output=jsonp').then(function(a){
+      c.tracks = ((a && a.tracks && a.tracks.data) || []).map(function(x){ return x.title; }).filter(Boolean);
+      if (!c.year && a && a.release_date) { var d = splitDate(a.release_date); c.year = d.year; c.month = d.month; c.day = d.day; }
+    });
+  }
+  function bcNameRun(){
+    var q = $('#bcName').value.trim();
+    if (!q) { q = [$('#f-title').value.trim(), $('#f-artist').value.trim()].filter(Boolean).join(' '); $('#bcName').value = q; }
+    if (!q) { bcMsg('앨범 이름이나 가수 이름을 적어 주세요.', 'err'); $('#bcName').focus(); return; }
+    bcCands = [];
+    var token = ++bcToken, fails = 0;
+    var safe = function(p){ return p.catch(function(){ fails++; return []; }); };
+    bcMsg('<span class="bcload" aria-hidden="true"></span>“' + esc(q) + '” 앨범을 찾는 중…');
+    Promise.all([safe(nmApple(q)), safe(nmDeezer(q)), safe(nmMB(q))]).then(function(parts){
+      if (token !== bcToken) return;
+      var out = [], seen = {};
+      parts.forEach(function(list){ list.forEach(function(c){
+        var key = candKey(c);
+        if (key in seen) { var o = out[seen[key]]; if (!o.year && c.year) { o.year = c.year; o.month = c.month; o.day = c.day; } if (!o.thumb && c.thumb) { o.thumb = c.thumb; o.coverBig = c.coverBig; } return; }
+        seen[key] = out.length; out.push(c);
+      }); });
+      if (!out.length && fails === 3) { bcMsg('<b>음반 정보를 불러오지 못했어요.</b> 인터넷 연결을 확인한 뒤 다시 찾아 주세요.', 'err'); return; }
+      out = out.slice(0, 20); bcCands = out;
+      if (!out.length) { bcMsg('<b>“' + esc(q) + '”와 맞는 앨범을 찾지 못했어요.</b> 영어 앨범 이름이나 가수 이름으로 바꿔서 찾아 보세요.'); return; }
+      bcMsg('<b>추정되는 앨범 ' + out.length + '개를 찾았어요.</b> 가지고 있는 CD와 같은 것을 골라 주세요.' +
+        '<div class="bccands" role="list">' + out.map(function(c, i){
+          var n = c.trackCount || 0;
+          return '<button type="button" class="bccand" role="listitem" data-ci="' + i + '">' +
+            (c.thumb ? '<img class="bcthumb" src="' + esc(c.thumb) + '" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'">' : '<span class="bcthumb" aria-hidden="true"></span>') +
+            '<span class="bctxt"><span class="bct">' + esc(c.title) + '</span><span class="bcm">' + esc(c.artist) + (c.year ? ' · ' + esc(dateText(c)) : '') + (n ? ' · ' + n + '곡' : '') + '</span>' +
+            (c.note ? '<span class="bcn">' + esc(c.note) + '</span>' : '') + '</span></button>';
+        }).join('') + '</div>');
+    });
+  }
+  $('#bcNameGo').addEventListener('click', bcNameRun);
+  $('#bcName').addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); bcNameRun(); } });
   $('#vOk').addEventListener('click', function(){ closeOv('#verifyOv'); $('#f-title').focus(); });
   $('#bcGo').addEventListener('click', bcRun);
   $('#bcNum').addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); bcRun(); } });
@@ -1875,7 +2028,7 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
       i: I('<circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line><polyline points="8 11 10.5 13.5 14.5 9"></polyline>') },
     { t: '정렬하고 진열장으로 보기', d: '<b>가수별 · 앨범명순 · 연도별</b>로 정렬할 수 있어요. 톱니바퀴의 <b>디자인 모드</b>에서 진열장을 고르면 CD가 선반에 꽂힌 모습으로 바뀌어요.',
       i: I('<rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="3" y1="12" x2="21" y2="12"></line><line x1="7" y1="5" x2="7" y2="11"></line><line x1="10" y1="5" x2="10" y2="11"></line><line x1="13" y1="5" x2="13" y2="11"></line><line x1="8" y1="13" x2="8" y2="19"></line><line x1="11" y1="13" x2="11" y2="19"></line>') },
-    { t: '수정하고 백업하기', d: '수정·삭제 버튼은 톱니바퀴의 <b>편집 모드</b>를 켜야 보여요. 기록은 이 기기에 저장되니, 가끔 톱니바퀴의 <b>백업 › 내보내기</b>로 파일을 받아 두세요. 이 안내는 톱니바퀴의 <b>사용법 보기</b>에서 다시 볼 수 있어요.',
+    { t: '수정하고 백업하기', d: '수정·삭제 버튼은 톱니바퀴의 <b>편집 모드</b>를 켜야 보여요. 기록은 바뀔 때마다 자동으로 백업돼요. 다른 기기로 옮길 땐 톱니바퀴의 <b>백업 › 내보내기</b>로 파일을 받아 두세요. 이 안내는 톱니바퀴의 <b>사용법 보기</b>에서 다시 볼 수 있어요.',
       i: I('<path d="M12 3v12"></path><polyline points="7 10 12 15 17 10"></polyline><path d="M5 19h14"></path>') }
   ];
   var tourIdx = 0;
@@ -1943,10 +2096,10 @@ body.editing .brandedit{display:inline-grid;place-items:center;animation:fadeIn 
   idbGet('state').catch(function(){ return null; }).then(function(st){
     if (st && Array.isArray(st.cds)) return st;
     var ls = lsGet(); if (ls && Array.isArray(ls.cds)) return ls;
-    return null;
+    return opfsRead();
   }).then(function(st){
     if (st) { cds = st.cds; settings = st.settings || {}; savedAt = st.savedAt || 0; }
-    applyBrand(); render(); fromHash(); restoreDraft(); setSave('saved');
+    applyBrand(); render(); fromHash(); restoreDraft(); setSave('saved'); abRestoreHandle();
     var seen = null; try { seen = localStorage.getItem(LS + '-tour'); } catch(e) {}
     if (!seen && !$('#formOv').classList.contains('open')) setTimeout(openTour, 450);
   });
